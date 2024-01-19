@@ -103,6 +103,56 @@ function App(): React.JSX.Element {
     });
   };
 
+  const crossSound = () => {
+    var tom = new Sound('tom.mp3', Sound.MAIN_BUNDLE, error => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          tom.getDuration() +
+          'number of channels: ' +
+          tom.getNumberOfChannels(),
+      );
+
+      // Play the sound with an onEnd callback
+      tom.play(success => {
+        if (success) {
+          console.log('successfully finished playing');
+        } else {
+          console.log('playback failed due to audio decoding errors');
+        }
+      });
+    });
+  };
+
+  const circleSound = () => {
+    var toms = new Sound('toms.mp3', Sound.MAIN_BUNDLE, error => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          toms.getDuration() +
+          'number of channels: ' +
+          toms.getNumberOfChannels(),
+      );
+
+      // Play the sound with an onEnd callback
+      toms.play(success => {
+        if (success) {
+          console.log('successfully finished playing');
+        } else {
+          console.log('playback failed due to audio decoding errors');
+        }
+      });
+    });
+  };
+
   const onChangeItem = (itemNumber: Number) => {
     if (gameWinner) {
       return Snackbar.show({
@@ -114,6 +164,11 @@ function App(): React.JSX.Element {
     if (gamestate[itemNumber] === 'empty') {
       gamestate[itemNumber] = isCross ? 'cross' : 'circle';
       setIsCross(!isCross);
+      if (isCross) {
+        crossSound();
+      } else {
+        circleSound();
+      }
     } else {
       return Snackbar.show({
         text: 'Position is already filled',
