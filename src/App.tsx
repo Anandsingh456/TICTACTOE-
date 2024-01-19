@@ -100,6 +100,12 @@ function App(): React.JSX.Element {
           console.log('playback failed due to audio decoding errors');
         }
       });
+      setTimeout(() => {
+        crash.stop(() => {
+          // Release the audio player resource after stopping
+          crash.release();
+        });
+      }, 1000);
     });
   };
 
@@ -125,6 +131,12 @@ function App(): React.JSX.Element {
           console.log('playback failed due to audio decoding errors');
         }
       });
+      setTimeout(() => {
+        tom.stop(() => {
+          // Release the audio player resource after stopping
+          tom.release();
+        });
+      }, 600);
     });
   };
 
@@ -150,6 +162,12 @@ function App(): React.JSX.Element {
           console.log('playback failed due to audio decoding errors');
         }
       });
+      setTimeout(() => {
+        toms.stop(() => {
+          // Release the audio player resource after stopping
+          toms.release();
+        });
+      }, 600);
     });
   };
 
