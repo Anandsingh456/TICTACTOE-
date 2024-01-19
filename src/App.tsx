@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import Icons from './components/Icons';
+import Sound from 'react-native-sound';
 
 function App(): React.JSX.Element {
   const [isCross, setIsCross] = useState<boolean>(false);
@@ -20,6 +21,7 @@ function App(): React.JSX.Element {
     setIsCross(false);
     setGameWinner('');
     setGameState(new Array(9).fill('empty', 0, 9));
+    playSound();
   };
 
   const checkIsWinner = () => {
@@ -74,6 +76,31 @@ function App(): React.JSX.Element {
     } else if (!gamestate.includes('empty', 0)) {
       setGameWinner('Draw game... ⌛️');
     }
+  };
+
+  const playSound = () => {
+    var crash = new Sound('crash.mp3', Sound.MAIN_BUNDLE, error => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          crash.getDuration() +
+          'number of channels: ' +
+          crash.getNumberOfChannels(),
+      );
+
+      // Play the sound with an onEnd callback
+      crash.play(success => {
+        if (success) {
+          console.log('successfully finished playing');
+        } else {
+          console.log('playback failed due to audio decoding errors');
+        }
+      });
+    });
   };
 
   const onChangeItem = (itemNumber: Number) => {
